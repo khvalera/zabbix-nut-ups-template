@@ -1,0 +1,1103 @@
+zabbix_export:
+  version: '6.4'
+  template_groups:
+    - uuid: 0e60ac85bc3941e2a1d66a048ff164da
+      name: Templates/UPS
+  templates:
+    - uuid: 0e60ac85bc3941e2a1d66a048ff164da
+      template: 'nut ups template'
+      name: 'NUT UPS template'
+      description: 'Zabbix Template for NUT(Network UPS Tools)'
+      groups:
+        - name: Templates/UPS
+      items:
+        - uuid: 4ed57f86023f4feebf29f882c77b7cb8
+          name: 'Battery charge'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, battery.charge]'
+          history: 30d
+          units: '%'
+          description: 'Displays battery percentage'
+          triggers:
+            - uuid: ddd3ce1686a04cfea39757de15484208
+              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<80 and last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>60'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>82'
+              name: 'Battery charge below 80%'
+              priority: WARNING
+              manual_close: 'YES'
+        - uuid: 27205eb751484986b0e808fe6077b91d
+          name: 'Battery charging or discharging'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, battery.charg_discharg]'
+          history: 7d
+          description: 'Displays battery charge and discharge status'
+          valuemap:
+            name: 'Battery charging or discharging'
+          triggers:
+            - uuid: afb4626101e14aa89976bf873e9541c2
+              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charg_discharg])=1'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charg_discharg])<>1'
+              name: 'The battery is charging'
+              status: DISABLED
+              priority: INFO
+        - uuid: f8d79bafead84dd3b32d0a88a8aae473
+          name: 'Battery date'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, battery.date]'
+          delay: 1h
+          history: 1d
+          trends: '0'
+          value_type: TEXT
+          inventory_link: DATE_HW_INSTALL
+        - uuid: 283405f71c6448199687f18ecf8bc01a
+          name: 'Battery low or high'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, battery.low_high]'
+          history: 7d
+          valuemap:
+            name: 'Battery low or high'
+          triggers:
+            - uuid: d5229f75f3044a7eb9a8212658481d9f
+              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.low_high])=1'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.low_high])<>1'
+              name: 'Low battery'
+              priority: DISASTER
+        - uuid: d92ae236c2894195bff00bbc3d8a14b8
+          name: 'Battery replaced'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, battery.replaced]'
+          history: 7d
+          description: 'Battery needs to be replaced'
+          valuemap:
+            name: 'Battery replaced'
+          triggers:
+            - uuid: 0781286fdf26438e9d21c33024d6119a
+              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.replaced])=1'
+              recovery_mode: NONE
+              name: 'The battery needs to be replaced'
+              priority: HIGH
+              manual_close: 'YES'
+        - uuid: d08b05443b9e4464ab85eabf8cf2a5b1
+          name: 'Battery runtime'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, battery.runtime]'
+          delay: 1h
+          history: 1d
+        - uuid: 4bd96cc5ce2040359c2752ee9eecc3cd
+          name: 'Battery temperature'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, battery.temperature]'
+          history: 30d
+          status: DISABLED
+          value_type: FLOAT
+          units: V
+        - uuid: bd31c460858c46cb9755677a1da68088
+          name: 'Battery type'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, battery.type]'
+          delay: 1h
+          history: 7d
+          trends: '0'
+          value_type: TEXT
+          inventory_link: TYPE
+        - uuid: 2950681a123548799393fb38bb3cf630
+          name: 'Battery voltage'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, battery.voltage]'
+          history: 30d
+          status: DISABLED
+          value_type: FLOAT
+          units: V
+        - uuid: 9ab52b7b5d0646989f6b10864fc1aef3
+          name: 'Device manufacturer'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, device.mfr]'
+          delay: 1h
+          history: 7d
+          trends: '0'
+          value_type: TEXT
+          inventory_link: ASSET_TAG
+        - uuid: 2e69dc336dcd4343ba146680bfc933d0
+          name: 'Device model'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, device.model]'
+          delay: 1h
+          history: 7d
+          trends: '0'
+          value_type: TEXT
+          inventory_link: MODEL
+        - uuid: 79daed0128834b5cb91a1cd36d82793b
+          name: 'Device serial'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, device.serial]'
+          delay: 1h
+          history: 7d
+          trends: '0'
+          value_type: TEXT
+          inventory_link: SERIALNO_A
+        - uuid: 49195f203b05423baaf21433a2bcdd40
+          name: 'Device type'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, device.type]'
+          delay: 1h
+          history: 7d
+          trends: '0'
+          value_type: TEXT
+          inventory_link: TYPE_FULL
+        - uuid: fa8769b159034dc0a856805057b42e05
+          name: 'Input frequency'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, input.frequency]'
+          history: 7d
+          units: Hz
+        - uuid: 472e8c42ef70436b9d023001c4daae58
+          name: 'Input voltage'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, input.voltage]'
+          history: 30d
+          value_type: FLOAT
+          units: V
+        - uuid: 751ac54db7574db9a1c779a7199afc97
+          name: 'Output frequency'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, output.frequency]'
+          history: 7d
+          units: Hz
+        - uuid: 8e5341a111d049d1a7526b95381b915c
+          name: 'Output voltage'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, output.voltage]'
+          history: 30d
+          value_type: FLOAT
+          units: V
+        - uuid: 1c7d054ba7434b19996bd32566070b52
+          name: 'Beeper status'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.beeper.status]'
+          delay: 1h
+          history: 1d
+          trends: '0'
+          value_type: TEXT
+        - uuid: 654b6eb218b2479ab8cf6809e02f6e72
+          name: 'UPS date'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.date]'
+          delay: 1h
+          history: 1d
+          trends: '0'
+          value_type: TEXT
+          description: 'UPS Issue Date'
+        - uuid: cccca297afef41449e25aeee83778942
+          name: 'UPS delay shutdown'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.delay.shutdown]'
+          delay: 1h
+          history: 1d
+          description: 'UPS shutdown delay set'
+        - uuid: 7a2c7908358c4c23b08462652d021ed4
+          name: 'UPS delay start'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.delay.start]'
+          delay: 1h
+          history: 1d
+          status: DISABLED
+          description: 'Delayed start of the UPS is installed'
+        - uuid: 3b7fd18850b646b98e9cac03e599e29f
+          name: 'UPS load'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.load]'
+          history: 7d
+          value_type: FLOAT
+          units: '%'
+          description: 'Percent load on UPS'
+          triggers:
+            - uuid: a4fb3034623a4d188f7d9843c514e10c
+              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.load])>=80'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.load])<=78'
+              name: 'UPS is overloaded'
+              priority: AVERAGE
+              manual_close: 'YES'
+        - uuid: 4d1a49bf5b8943caa53e2701b0e2ee00
+          name: 'UPS state mode'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.state.mode]'
+          history: 7d
+          description: 'UPS operating mode (On line, on battery, offline, bypass)'
+          valuemap:
+            name: 'UPS state mode'
+          triggers:
+            - uuid: cac94ccb31034cb69d17de62de6d0739
+              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=2'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=1'
+              name: 'On battery'
+              priority: AVERAGE
+              manual_close: 'YES'
+            - uuid: 01c665fdd6084614a6f1151a6be51271
+              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=0'
+              recovery_mode: NONE
+              name: 'Unknown State'
+              priority: HIGH
+              manual_close: 'YES'
+        - uuid: 97c71a2b8eb94b5bb50c8445cdd5029f
+          name: 'Voltage stabilization'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.state.stab]'
+          history: 7d
+          description: 'Output voltage stabilization'
+          valuemap:
+            name: 'UPS incoming voltage'
+          triggers:
+            - uuid: b65388eef59841ea858c115020d423f2
+              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])=2'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])<>2'
+              name: 'UPS is boosting incoming voltage'
+              priority: INFO
+              type: MULTIPLE
+            - uuid: aeda34b28f574fc08e4400cddcf78979
+              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])=1'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])<>1'
+              name: 'UPS is trimming incoming voltage'
+              priority: INFO
+              type: MULTIPLE
+        - uuid: 5a93f199647f4ec89bc18ba3241d0a60
+          name: 'UPS status'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.status]'
+          history: 7d
+          trends: '0'
+          value_type: TEXT
+          description: 'Text display of UPS status'
+          triggers:
+            - uuid: 356bc7df047342488e63ac7d86de10c6
+              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.status])=8'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.status])<>8'
+              name: 'UPS is currently performing runtime calibration (on battery)'
+              priority: INFO
+              type: MULTIPLE
+        - uuid: 6a203991ce5e4e4da948078888abbf57
+          name: 'UPS test result'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.test.result]'
+          delay: 1h
+          history: 1d
+          trends: '0'
+          value_type: TEXT
+        - uuid: 3575bec4e88b4b829cbbcdf21ae53be3
+          name: 'UPS timer shutdown'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.timer.shutdown]'
+          delay: 1h
+          history: 1d
+        - uuid: 48ceaced0fe246289789f933d523c8df
+          name: 'UPS timer start'
+          type: ZABBIX_ACTIVE
+          key: 'nutmon[{HOST.NAME}, ups.timer.start]'
+          delay: 1h
+          history: 1d
+          status: DISABLED
+      tags:
+        - tag: class
+          value: power
+        - tag: target
+          value: ups
+      dashboards:
+        - uuid: 83ac3a84b9a94f66a8db42b0be841756
+          name: 'UPS Data'
+          display_period: '10'
+          pages:
+            - widgets:
+                - type: item
+                  name: 'Device manufacturer'
+                  width: '3'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, device.mfr]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: INTEGER
+                      name: units_bold
+                      value: '0'
+                    - type: INTEGER
+                      name: units_show
+                      value: '0'
+                    - type: STRING
+                      name: value_color
+                      value: 1565C0
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: item
+                  name: 'UPS state mode'
+                  'y': '2'
+                  width: '6'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: STRING
+                      name: bg_color
+                      value: FFFDE7
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, ups.state.mode]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: INTEGER
+                      name: units_bold
+                      value: '0'
+                    - type: INTEGER
+                      name: units_show
+                      value: '0'
+                    - type: STRING
+                      name: value_color
+                      value: 1B5E20
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: item
+                  name: 'Input voltage'
+                  'y': '4'
+                  width: '3'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: STRING
+                      name: bg_color
+                      value: FBE9E7
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, input.voltage]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: STRING
+                      name: units
+                      value: V
+                    - type: INTEGER
+                      name: units_size
+                      value: '20'
+                    - type: STRING
+                      name: value_color
+                      value: '891515'
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: graph
+                  name: Voltage
+                  'y': '6'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'nut ups template'
+                        name: Voltage
+                - type: item
+                  name: 'Device model'
+                  x: '3'
+                  width: '3'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, device.model]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: INTEGER
+                      name: units_bold
+                      value: '0'
+                    - type: INTEGER
+                      name: units_show
+                      value: '0'
+                    - type: STRING
+                      name: value_color
+                      value: 1565C0
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: item
+                  name: 'Input frequency'
+                  x: '3'
+                  'y': '4'
+                  width: '3'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: STRING
+                      name: bg_color
+                      value: FBE9E7
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, input.frequency]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: STRING
+                      name: units
+                      value: V
+                    - type: INTEGER
+                      name: units_size
+                      value: '20'
+                    - type: STRING
+                      name: value_color
+                      value: 0040FF
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: item
+                  name: 'Device serial'
+                  x: '6'
+                  width: '3'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, device.serial]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: INTEGER
+                      name: units_bold
+                      value: '0'
+                    - type: INTEGER
+                      name: units_show
+                      value: '0'
+                    - type: STRING
+                      name: value_color
+                      value: 1565C0
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: item
+                  name: 'UPS date'
+                  x: '6'
+                  'y': '2'
+                  width: '3'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: STRING
+                      name: bg_color
+                      value: FFFDE7
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, ups.date]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: INTEGER
+                      name: units_bold
+                      value: '0'
+                    - type: INTEGER
+                      name: units_show
+                      value: '0'
+                    - type: STRING
+                      name: value_color
+                      value: 1B5E20
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: item
+                  name: 'Output voltage'
+                  x: '6'
+                  'y': '4'
+                  width: '3'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: STRING
+                      name: bg_color
+                      value: F1F8E9
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, output.voltage]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: STRING
+                      name: units
+                      value: V
+                    - type: INTEGER
+                      name: units_size
+                      value: '20'
+                    - type: STRING
+                      name: value_color
+                      value: '891515'
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: item
+                  name: 'Device type'
+                  x: '9'
+                  width: '3'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, device.type]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: INTEGER
+                      name: units_bold
+                      value: '0'
+                    - type: INTEGER
+                      name: units_show
+                      value: '0'
+                    - type: STRING
+                      name: value_color
+                      value: 1565C0
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: item
+                  name: 'UPS load'
+                  x: '9'
+                  'y': '2'
+                  width: '3'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: STRING
+                      name: bg_color
+                      value: FFFDE7
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, ups.load]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: STRING
+                      name: units
+                      value: '%'
+                    - type: INTEGER
+                      name: units_size
+                      value: '20'
+                    - type: STRING
+                      name: value_color
+                      value: 1B5E20
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: item
+                  name: 'Output frequency'
+                  x: '9'
+                  'y': '4'
+                  width: '3'
+                  hide_header: 'YES'
+                  fields:
+                    - type: INTEGER
+                      name: adv_conf
+                      value: '1'
+                    - type: STRING
+                      name: bg_color
+                      value: F1F8E9
+                    - type: INTEGER
+                      name: decimal_size
+                      value: '20'
+                    - type: STRING
+                      name: description
+                      value: '{ITEM.NAME}:'
+                    - type: INTEGER
+                      name: desc_h_pos
+                      value: '0'
+                    - type: INTEGER
+                      name: desc_size
+                      value: '18'
+                    - type: INTEGER
+                      name: desc_v_pos
+                      value: '0'
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'nut ups template'
+                        key: 'nutmon[{HOST.NAME}, output.frequency]'
+                    - type: INTEGER
+                      name: show
+                      value: '1'
+                    - type: INTEGER
+                      name: show
+                      value: '2'
+                    - type: INTEGER
+                      name: show
+                      value: '3'
+                    - type: INTEGER
+                      name: time_size
+                      value: '14'
+                    - type: INTEGER
+                      name: time_v_pos
+                      value: '2'
+                    - type: STRING
+                      name: units
+                      value: V
+                    - type: INTEGER
+                      name: units_size
+                      value: '20'
+                    - type: STRING
+                      name: value_color
+                      value: 0040FF
+                    - type: INTEGER
+                      name: value_size
+                      value: '20'
+                - type: graph
+                  name: Status
+                  x: '12'
+                  width: '12'
+                  height: '6'
+                  fields:
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'nut ups template'
+                        name: Status
+                - type: graph
+                  name: Frequency
+                  x: '12'
+                  'y': '6'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'nut ups template'
+                        name: Frequency
+      valuemaps:
+        - uuid: 66fd97dde90a43fba96434f2037cb79b
+          name: 'Battery charging or discharging'
+          mappings:
+            - value: '0'
+              newvalue: Inactive
+            - value: '1'
+              newvalue: Charging
+            - value: '2'
+              newvalue: Discharging
+        - uuid: dad2b3321ad243b2b77621ee8d52c8be
+          name: 'Battery low or high'
+          mappings:
+            - value: '0'
+              newvalue: Normally
+            - value: '1'
+              newvalue: 'Low battery'
+            - value: '2'
+              newvalue: 'High battery'
+        - uuid: e40934a283d94ee6a2d321d399d52cb7
+          name: 'Battery replaced'
+          mappings:
+            - value: '0'
+              newvalue: 'Not required'
+            - value: '1'
+              newvalue: Replace
+        - uuid: ab13b4ffbcf54bde9f01899a0816f6f9
+          name: 'UPS incoming voltage'
+          mappings:
+            - value: '0'
+              newvalue: 'Not processed'
+            - value: '1'
+              newvalue: Trimming
+            - value: '2'
+              newvalue: Boosting
+        - uuid: 4ca6506cc5464c7cb7ec54aaa53fccf9
+          name: 'UPS state mode'
+          mappings:
+            - value: '0'
+              newvalue: 'Unknown state'
+            - value: '1'
+              newvalue: 'On line (mains is present)'
+            - value: '2'
+              newvalue: 'On battery (mains is not present)'
+            - value: '3'
+              newvalue: Bypass
+            - value: '4'
+              newvalue: Offline
+  triggers:
+    - uuid: bdf69282bcac4759bd5094a6134685bb
+      expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<40 and last(/nut ups template/nutmon[{HOST.NAME}, ups.status])=2'
+      recovery_mode: RECOVERY_EXPRESSION
+      recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>42'
+      name: 'Battery charge below 40%'
+      priority: HIGH
+      manual_close: 'YES'
+    - uuid: 73058488802f4326bf2c36a9cdefcf32
+      expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<60 and last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>40 and last(/nut ups template/nutmon[{HOST.NAME}, ups.status])=2'
+      recovery_mode: RECOVERY_EXPRESSION
+      recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>62'
+      name: 'Battery charge below 60%'
+      priority: AVERAGE
+      manual_close: 'YES'
+  graphs:
+    - uuid: 28c4258bf18948e4ac078d1b84c61f5d
+      name: Frequency
+      graph_items:
+        - color: '891515'
+          calc_fnc: ALL
+          item:
+            host: 'nut ups template'
+            key: 'nutmon[{HOST.NAME}, input.frequency]'
+        - sortorder: '1'
+          color: '274482'
+          calc_fnc: ALL
+          item:
+            host: 'nut ups template'
+            key: 'nutmon[{HOST.NAME}, output.frequency]'
+    - uuid: 6e4370693c9a4460bd52f2002693b8b4
+      name: Status
+      height: '300'
+      yaxismax: '5'
+      show_triggers: 'NO'
+      ymin_type_1: FIXED
+      ymax_type_1: FIXED
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'nut ups template'
+            key: 'nutmon[{HOST.NAME}, ups.state.mode]'
+        - sortorder: '1'
+          color: '274482'
+          calc_fnc: ALL
+          item:
+            host: 'nut ups template'
+            key: 'nutmon[{HOST.NAME}, battery.charg_discharg]'
+    - uuid: 3349a48395b543ffbd3128e29a17689f
+      name: Voltage
+      height: '230'
+      graph_items:
+        - color: B71C1C
+          calc_fnc: ALL
+          item:
+            host: 'nut ups template'
+            key: 'nutmon[{HOST.NAME}, input.voltage]'
+        - sortorder: '1'
+          color: '274482'
+          calc_fnc: ALL
+          item:
+            host: 'nut ups template'
+            key: 'nutmon[{HOST.NAME}, output.voltage]'
