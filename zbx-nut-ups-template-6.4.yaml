@@ -14,30 +14,30 @@ zabbix_export:
         - uuid: 4ed57f86023f4feebf29f882c77b7cb8
           name: 'Battery charge'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, battery.charge]'
+          key: 'nutmon[{HOST.HOST}, battery.charge]'
           history: 30d
           units: '%'
           description: 'Displays battery percentage'
         - uuid: 27205eb751484986b0e808fe6077b91d
           name: 'Battery charging or discharging'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, battery.charg_discharg]'
+          key: 'nutmon[{HOST.HOST}, battery.charg_discharg]'
           history: 7d
           description: 'Displays battery charge and discharge status'
           valuemap:
             name: 'Battery charging or discharging'
           triggers:
             - uuid: afb4626101e14aa89976bf873e9541c2
-              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charg_discharg])=1'
+              expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.charg_discharg])=1'
               recovery_mode: RECOVERY_EXPRESSION
-              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charg_discharg])<>1'
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.charg_discharg])<>1'
               name: 'The battery is charging'
               status: DISABLED
               priority: INFO
         - uuid: f8d79bafead84dd3b32d0a88a8aae473
           name: 'Battery date'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, battery.date]'
+          key: 'nutmon[{HOST.HOST}, battery.date]'
           delay: 1h
           history: 1d
           trends: '0'
@@ -46,28 +46,28 @@ zabbix_export:
         - uuid: 283405f71c6448199687f18ecf8bc01a
           name: 'Battery low or high'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, battery.low_high]'
+          key: 'nutmon[{HOST.HOST}, battery.low_high]'
           history: 7d
           valuemap:
             name: 'Battery low or high'
           triggers:
             - uuid: d5229f75f3044a7eb9a8212658481d9f
-              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.low_high])=1'
+              expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.low_high])=1'
               recovery_mode: RECOVERY_EXPRESSION
-              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.low_high])<>1'
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.low_high])<>1'
               name: 'Low battery'
               priority: DISASTER
         - uuid: d92ae236c2894195bff00bbc3d8a14b8
           name: 'Battery replaced'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, battery.replaced]'
+          key: 'nutmon[{HOST.HOST}, battery.replaced]'
           history: 7d
           description: 'Battery needs to be replaced'
           valuemap:
             name: 'Battery replaced'
           triggers:
             - uuid: 0781286fdf26438e9d21c33024d6119a
-              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.replaced])=1'
+              expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.replaced])=1'
               recovery_mode: NONE
               name: 'The battery needs to be replaced'
               priority: HIGH
@@ -75,13 +75,13 @@ zabbix_export:
         - uuid: d08b05443b9e4464ab85eabf8cf2a5b1
           name: 'Battery runtime'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, battery.runtime]'
+          key: 'nutmon[{HOST.HOST}, battery.runtime]'
           delay: 1h
           history: 1d
         - uuid: 4bd96cc5ce2040359c2752ee9eecc3cd
           name: 'Battery temperature'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, battery.temperature]'
+          key: 'nutmon[{HOST.HOST}, battery.temperature]'
           history: 30d
           status: DISABLED
           value_type: FLOAT
@@ -89,7 +89,7 @@ zabbix_export:
         - uuid: bd31c460858c46cb9755677a1da68088
           name: 'Battery type'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, battery.type]'
+          key: 'nutmon[{HOST.HOST}, battery.type]'
           delay: 1h
           history: 7d
           trends: '0'
@@ -98,7 +98,7 @@ zabbix_export:
         - uuid: 2950681a123548799393fb38bb3cf630
           name: 'Battery voltage'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, battery.voltage]'
+          key: 'nutmon[{HOST.HOST}, battery.voltage]'
           history: 30d
           status: DISABLED
           value_type: FLOAT
@@ -106,7 +106,7 @@ zabbix_export:
         - uuid: 9ab52b7b5d0646989f6b10864fc1aef3
           name: 'Device manufacturer'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, device.mfr]'
+          key: 'nutmon[{HOST.HOST}, device.mfr]'
           delay: 1h
           history: 7d
           trends: '0'
@@ -115,7 +115,7 @@ zabbix_export:
         - uuid: 2e69dc336dcd4343ba146680bfc933d0
           name: 'Device model'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, device.model]'
+          key: 'nutmon[{HOST.HOST}, device.model]'
           delay: 1h
           history: 7d
           trends: '0'
@@ -124,7 +124,7 @@ zabbix_export:
         - uuid: 79daed0128834b5cb91a1cd36d82793b
           name: 'Device serial'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, device.serial]'
+          key: 'nutmon[{HOST.HOST}, device.serial]'
           delay: 1h
           history: 7d
           trends: '0'
@@ -133,7 +133,7 @@ zabbix_export:
         - uuid: 49195f203b05423baaf21433a2bcdd40
           name: 'Device type'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, device.type]'
+          key: 'nutmon[{HOST.HOST}, device.type]'
           delay: 1h
           history: 7d
           trends: '0'
@@ -142,33 +142,33 @@ zabbix_export:
         - uuid: fa8769b159034dc0a856805057b42e05
           name: 'Input frequency'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, input.frequency]'
+          key: 'nutmon[{HOST.HOST}, input.frequency]'
           history: 7d
           units: Hz
         - uuid: 472e8c42ef70436b9d023001c4daae58
           name: 'Input voltage'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, input.voltage]'
+          key: 'nutmon[{HOST.HOST}, input.voltage]'
           history: 30d
           value_type: FLOAT
           units: V
         - uuid: 751ac54db7574db9a1c779a7199afc97
           name: 'Output frequency'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, output.frequency]'
+          key: 'nutmon[{HOST.HOST}, output.frequency]'
           history: 7d
           units: Hz
         - uuid: 8e5341a111d049d1a7526b95381b915c
           name: 'Output voltage'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, output.voltage]'
+          key: 'nutmon[{HOST.HOST}, output.voltage]'
           history: 30d
           value_type: FLOAT
           units: V
         - uuid: 1c7d054ba7434b19996bd32566070b52
           name: 'Beeper status'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.beeper.status]'
+          key: 'nutmon[{HOST.HOST}, ups.beeper.status]'
           delay: 1h
           history: 1d
           trends: '0'
@@ -176,7 +176,7 @@ zabbix_export:
         - uuid: 654b6eb218b2479ab8cf6809e02f6e72
           name: 'UPS date'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.date]'
+          key: 'nutmon[{HOST.HOST}, ups.date]'
           delay: 1h
           history: 1d
           trends: '0'
@@ -185,14 +185,14 @@ zabbix_export:
         - uuid: cccca297afef41449e25aeee83778942
           name: 'UPS delay shutdown'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.delay.shutdown]'
+          key: 'nutmon[{HOST.HOST}, ups.delay.shutdown]'
           delay: 1h
           history: 1d
           description: 'UPS shutdown delay set'
         - uuid: 7a2c7908358c4c23b08462652d021ed4
           name: 'UPS delay start'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.delay.start]'
+          key: 'nutmon[{HOST.HOST}, ups.delay.start]'
           delay: 1h
           history: 1d
           status: DISABLED
@@ -200,37 +200,37 @@ zabbix_export:
         - uuid: 3b7fd18850b646b98e9cac03e599e29f
           name: 'UPS load'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.load]'
+          key: 'nutmon[{HOST.HOST}, ups.load]'
           history: 7d
           value_type: FLOAT
           units: '%'
           description: 'Percent load on UPS'
           triggers:
             - uuid: a4fb3034623a4d188f7d9843c514e10c
-              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.load])>=80'
+              expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.load])>=80'
               recovery_mode: RECOVERY_EXPRESSION
-              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.load])<=78'
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.load])<=78'
               name: 'UPS is overloaded'
               priority: AVERAGE
               manual_close: 'YES'
         - uuid: 4d1a49bf5b8943caa53e2701b0e2ee00
           name: 'UPS state mode'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.state.mode]'
+          key: 'nutmon[{HOST.HOST}, ups.state.mode]'
           history: 7d
           description: 'UPS operating mode (On line, on battery, offline, bypass)'
           valuemap:
             name: 'UPS state mode'
           triggers:
             - uuid: cac94ccb31034cb69d17de62de6d0739
-              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=2'
+              expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.state.mode])=2'
               recovery_mode: RECOVERY_EXPRESSION
-              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=1'
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.state.mode])=1'
               name: 'On battery'
               priority: AVERAGE
               manual_close: 'YES'
             - uuid: 01c665fdd6084614a6f1151a6be51271
-              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=0'
+              expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.state.mode])=0'
               recovery_mode: NONE
               name: 'Unknown State'
               priority: HIGH
@@ -238,44 +238,44 @@ zabbix_export:
         - uuid: 97c71a2b8eb94b5bb50c8445cdd5029f
           name: 'Voltage stabilization'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.state.stab]'
+          key: 'nutmon[{HOST.HOST}, ups.state.stab]'
           history: 7d
           description: 'Output voltage stabilization'
           valuemap:
             name: 'UPS incoming voltage'
           triggers:
             - uuid: b65388eef59841ea858c115020d423f2
-              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])=2'
+              expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.state.stab])=2'
               recovery_mode: RECOVERY_EXPRESSION
-              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])<>2'
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.state.stab])<>2'
               name: 'UPS is boosting incoming voltage'
               priority: INFO
             - uuid: aeda34b28f574fc08e4400cddcf78979
-              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])=1'
+              expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.state.stab])=1'
               recovery_mode: RECOVERY_EXPRESSION
-              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])<>1'
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.state.stab])<>1'
               name: 'UPS is trimming incoming voltage'
               priority: INFO
         - uuid: 5a93f199647f4ec89bc18ba3241d0a60
           name: 'UPS status'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.status]'
+          key: 'nutmon[{HOST.HOST}, ups.status]'
           history: 7d
           trends: '0'
           value_type: TEXT
           description: 'Text display of UPS status'
           triggers:
             - uuid: 356bc7df047342488e63ac7d86de10c6
-              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.status])=8'
+              expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.status])=8'
               recovery_mode: RECOVERY_EXPRESSION
-              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.status])<>8'
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.status])<>8'
               name: 'UPS is currently performing runtime calibration (on battery)'
               priority: INFO
               type: MULTIPLE
         - uuid: 6a203991ce5e4e4da948078888abbf57
           name: 'UPS test result'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.test.result]'
+          key: 'nutmon[{HOST.HOST}, ups.test.result]'
           delay: 1h
           history: 1d
           trends: '0'
@@ -283,13 +283,13 @@ zabbix_export:
         - uuid: 3575bec4e88b4b829cbbcdf21ae53be3
           name: 'UPS timer shutdown'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.timer.shutdown]'
+          key: 'nutmon[{HOST.HOST}, ups.timer.shutdown]'
           delay: 1h
           history: 1d
         - uuid: 48ceaced0fe246289789f933d523c8df
           name: 'UPS timer start'
           type: ZABBIX_ACTIVE
-          key: 'nutmon[{HOST.NAME}, ups.timer.start]'
+          key: 'nutmon[{HOST.HOST}, ups.timer.start]'
           delay: 1h
           history: 1d
           status: DISABLED
@@ -331,7 +331,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, device.mfr]'
+                        key: 'nutmon[{HOST.HOST}, device.mfr]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -390,7 +390,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, ups.state.mode]'
+                        key: 'nutmon[{HOST.HOST}, ups.state.mode]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -449,7 +449,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, input.voltage]'
+                        key: 'nutmon[{HOST.HOST}, input.voltage]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -516,7 +516,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, device.model]'
+                        key: 'nutmon[{HOST.HOST}, device.model]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -576,7 +576,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, input.frequency]'
+                        key: 'nutmon[{HOST.HOST}, input.frequency]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -632,7 +632,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, device.serial]'
+                        key: 'nutmon[{HOST.HOST}, device.serial]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -692,7 +692,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, ups.date]'
+                        key: 'nutmon[{HOST.HOST}, ups.date]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -752,7 +752,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, output.voltage]'
+                        key: 'nutmon[{HOST.HOST}, output.voltage]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -808,7 +808,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, device.type]'
+                        key: 'nutmon[{HOST.HOST}, device.type]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -868,7 +868,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, ups.load]'
+                        key: 'nutmon[{HOST.HOST}, ups.load]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -928,7 +928,7 @@ zabbix_export:
                       name: itemid
                       value:
                         host: 'nut ups template'
-                        key: 'nutmon[{HOST.NAME}, output.frequency]'
+                        key: 'nutmon[{HOST.HOST}, output.frequency]'
                     - type: INTEGER
                       name: show
                       value: '1'
@@ -1029,23 +1029,23 @@ zabbix_export:
               newvalue: Offline
   triggers:
     - uuid: bdf69282bcac4759bd5094a6134685bb
-      expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<40 and last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=2'
+      expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.charge])<40 and last(/nut ups template/nutmon[{HOST.HOST}, ups.state.mode])=2'
       recovery_mode: RECOVERY_EXPRESSION
-      recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>42'
+      recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.charge])>42'
       name: 'Battery charge below 40%'
       priority: HIGH
       manual_close: 'YES'
     - uuid: 73058488802f4326bf2c36a9cdefcf32
-      expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<60 and last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>40 and last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=2'
+      expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.charge])<60 and last(/nut ups template/nutmon[{HOST.HOST}, battery.charge])>40 and last(/nut ups template/nutmon[{HOST.HOST}, ups.state.mode])=2'
       recovery_mode: RECOVERY_EXPRESSION
-      recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>62'
+      recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.charge])>62'
       name: 'Battery charge below 60%'
       priority: AVERAGE
       manual_close: 'YES'
     - uuid: ddd3ce1686a04cfea39757de15484208
-      expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<80 and last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>60 and last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=2'
+      expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.charge])<80 and last(/nut ups template/nutmon[{HOST.HOST}, battery.charge])>60 and last(/nut ups template/nutmon[{HOST.HOST}, ups.state.mode])=2'
       recovery_mode: RECOVERY_EXPRESSION
-      recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>82'
+      recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, battery.charge])>82'
       name: 'Battery charge below 80%'
       priority: WARNING
       manual_close: 'YES'
@@ -1057,13 +1057,13 @@ zabbix_export:
           calc_fnc: ALL
           item:
             host: 'nut ups template'
-            key: 'nutmon[{HOST.NAME}, input.frequency]'
+            key: 'nutmon[{HOST.HOST}, input.frequency]'
         - sortorder: '1'
           color: '274482'
           calc_fnc: ALL
           item:
             host: 'nut ups template'
-            key: 'nutmon[{HOST.NAME}, output.frequency]'
+            key: 'nutmon[{HOST.HOST}, output.frequency]'
     - uuid: 6e4370693c9a4460bd52f2002693b8b4
       name: Status
       height: '300'
@@ -1076,13 +1076,13 @@ zabbix_export:
           calc_fnc: ALL
           item:
             host: 'nut ups template'
-            key: 'nutmon[{HOST.NAME}, ups.state.mode]'
+            key: 'nutmon[{HOST.HOST}, ups.state.mode]'
         - sortorder: '1'
           color: 388E3C
           calc_fnc: ALL
           item:
             host: 'nut ups template'
-            key: 'nutmon[{HOST.NAME}, battery.charg_discharg]'
+            key: 'nutmon[{HOST.HOST}, battery.charg_discharg]'
     - uuid: 3349a48395b543ffbd3128e29a17689f
       name: Voltage
       height: '230'
@@ -1091,10 +1091,10 @@ zabbix_export:
           calc_fnc: ALL
           item:
             host: 'nut ups template'
-            key: 'nutmon[{HOST.NAME}, input.voltage]'
+            key: 'nutmon[{HOST.HOST}, input.voltage]'
         - sortorder: '1'
           color: '274482'
           calc_fnc: ALL
           item:
             host: 'nut ups template'
-            key: 'nutmon[{HOST.NAME}, output.voltage]'
+            key: 'nutmon[{HOST.HOST}, output.voltage]'
