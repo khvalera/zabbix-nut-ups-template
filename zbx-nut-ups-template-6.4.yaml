@@ -250,14 +250,12 @@ zabbix_export:
               recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])<>2'
               name: 'UPS is boosting incoming voltage'
               priority: INFO
-              type: MULTIPLE
             - uuid: aeda34b28f574fc08e4400cddcf78979
               expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])=1'
               recovery_mode: RECOVERY_EXPRESSION
               recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, ups.state.stab])<>1'
               name: 'UPS is trimming incoming voltage'
               priority: INFO
-              type: MULTIPLE
         - uuid: 5a93f199647f4ec89bc18ba3241d0a60
           name: 'UPS status'
           type: ZABBIX_ACTIVE
