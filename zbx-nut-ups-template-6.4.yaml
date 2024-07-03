@@ -18,14 +18,6 @@ zabbix_export:
           history: 30d
           units: '%'
           description: 'Displays battery percentage'
-          triggers:
-            - uuid: ddd3ce1686a04cfea39757de15484208
-              expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<80 and last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>60'
-              recovery_mode: RECOVERY_EXPRESSION
-              recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>82'
-              name: 'Battery charge below 80%'
-              priority: WARNING
-              manual_close: 'YES'
         - uuid: 27205eb751484986b0e808fe6077b91d
           name: 'Battery charging or discharging'
           type: ZABBIX_ACTIVE
@@ -1039,18 +1031,25 @@ zabbix_export:
               newvalue: Offline
   triggers:
     - uuid: bdf69282bcac4759bd5094a6134685bb
-      expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<40 and last(/nut ups template/nutmon[{HOST.NAME}, ups.status])=2'
+      expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<40 and last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=2'
       recovery_mode: RECOVERY_EXPRESSION
       recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>42'
       name: 'Battery charge below 40%'
       priority: HIGH
       manual_close: 'YES'
     - uuid: 73058488802f4326bf2c36a9cdefcf32
-      expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<60 and last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>40 and last(/nut ups template/nutmon[{HOST.NAME}, ups.status])=2'
+      expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<60 and last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>40 and last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=2'
       recovery_mode: RECOVERY_EXPRESSION
       recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>62'
       name: 'Battery charge below 60%'
       priority: AVERAGE
+      manual_close: 'YES'
+    - uuid: ddd3ce1686a04cfea39757de15484208
+      expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])<80 and last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>60 and last(/nut ups template/nutmon[{HOST.NAME}, ups.state.mode])=2'
+      recovery_mode: RECOVERY_EXPRESSION
+      recovery_expression: 'last(/nut ups template/nutmon[{HOST.NAME}, battery.charge])>82'
+      name: 'Battery charge below 80%'
+      priority: WARNING
       manual_close: 'YES'
   graphs:
     - uuid: 28c4258bf18948e4ac078d1b84c61f5d
@@ -1075,13 +1074,13 @@ zabbix_export:
       ymin_type_1: FIXED
       ymax_type_1: FIXED
       graph_items:
-        - color: 1A7C11
+        - color: 0040FF
           calc_fnc: ALL
           item:
             host: 'nut ups template'
             key: 'nutmon[{HOST.NAME}, ups.state.mode]'
         - sortorder: '1'
-          color: '274482'
+          color: 388E3C
           calc_fnc: ALL
           item:
             host: 'nut ups template'
