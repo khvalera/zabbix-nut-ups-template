@@ -231,7 +231,8 @@ zabbix_export:
               manual_close: 'YES'
             - uuid: 01c665fdd6084614a6f1151a6be51271
               expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.state.mode])=0'
-              recovery_mode: NONE
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/nut ups template/nutmon[{HOST.HOST}, ups.state.mode])>0'
               name: 'Unknown State'
               priority: HIGH
               manual_close: 'YES'
